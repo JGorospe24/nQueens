@@ -1,7 +1,7 @@
 from board import Board
 
 def main():
-    n = eval(input("How many Queens?"))
+    n = int(input("How many Queens?"))
     chessBoard = Board(n)
     print(chessBoard.columns)
 
