@@ -10,13 +10,13 @@ class Board:
 
     def initializeBoard(self, n):
         # Subtract 1 from n to account for index starting at 0
-        for x in range(n-1):
+        for x in range(n):
             columnTiles = list()
             for k in range(n):
                 columnTiles.append(k)
 
             # Add 1 to n because randint's parameter for upper bound is not inclusive
-            columnTiles[self.generate(n+1)] = "Q"
+            columnTiles[self.generate(n)] = "Q"
 
             self.columns.append(columnTiles)
             
@@ -33,7 +33,7 @@ class Board:
     # print()
     
     def generate(self, n):
-        return random.randint(0,n);
+        return random.randint(0,n-1);
     
         
         
