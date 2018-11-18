@@ -16,7 +16,7 @@ class Board:
                 columnTiles.append(k)
 
             # Add 1 to n because randint's parameter for upper bound is not inclusive
-            columnTiles[self.generate(n)] = "Q"
+            columnTiles[random.randint(0,n-1)] = "Q"
 
             self.columns.append(columnTiles)
             
@@ -31,9 +31,7 @@ class Board:
         
     #def printBoard(self):
     # print()
-    
-    def generate(self, n):
-        return random.randint(0,n-1);
+
     
         
         
