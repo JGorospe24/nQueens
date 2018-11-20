@@ -3,6 +3,7 @@ from board import Board
 def main():
     n = int(input("How many Queens?"))
     chessBoard = Board(n)
+    print(chessBoard.queens)
     print(chessBoard.columns)
 
 
