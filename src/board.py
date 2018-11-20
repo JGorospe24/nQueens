@@ -24,10 +24,30 @@ class Board:
             #At this point, we should have a column list of all the columns and its values, and a queens dictionary to keep track of where the queens are placed within a column
             self.columns.append(columnTiles)
 
+    def checkConflictsHorizontal(self):
+        col = 0
+
+        for conflicts in self.columns:
+            row = 0
+            for x in conflicts:
+                #print("BEFORE: Column: {}, Row: {}, conflicts: {}".format(col, row, conflicts[x]), end=" || ")
+                tempConflicts = 0
+                for y in self.queens:
+                    if self.queens[y] == row:
+                        tempConflicts += 1
+                if self.queens["Q" + str(col+1)] == row:
+                    tempConflicts -= 1
+                conflicts[x] = tempConflicts
+                #print("AFTER: Column: {}, Row: {}, conflicts: {}".format(col, row, conflicts[x]))
+                row += 1
+            col += 1
+
+
 
     def checkConflicts(self):
         
         conflicts= 0;
+        self.checkConflictsHorizontal()
         
         #loop through index of colums for possible placements of queen
         
