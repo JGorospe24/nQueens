@@ -67,6 +67,60 @@ class Board:
                 conflicts[x] = conflicts[x] + tempConflicts
             col += 1
 
+    def checkConflictsRightUp(self):
+        col = 0
+
+        for conflicts in self.columns:
+
+            for x in range(len(conflicts)):
+                tempConflicts = 0
+
+                row = x - 1
+                for y in self.queens:
+                    if int(y[1]) - 1 > col:
+                        if self.queens[y] == row:
+                            tempConflicts += 1
+                        row -= 1
+
+                conflicts[x] = conflicts[x] + tempConflicts
+            col += 1
+
+    def checkConflictsLeftUp(self):
+        col = 0
+
+        for conflicts in self.columns:
+
+            for x in range(len(conflicts)):
+                tempConflicts = 0
+
+                row = x - col
+                for y in self.queens:
+                    if int(y[1]) - 1 < col:
+                        if self.queens[y] == row:
+                            tempConflicts += 1
+                        row += 1
+
+                conflicts[x] = conflicts[x] + tempConflicts
+            col += 1
+
+    def checkConflictsLeftDown(self):
+        col = 0
+
+        for conflicts in self.columns:
+
+            for x in range(len(conflicts)):
+                tempConflicts = 0
+
+                row = x + col
+                for y in self.queens:
+                    if int(y[1]) - 1 < col:
+                        if self.queens[y] == row:
+                            tempConflicts += 1
+                        row -= 1
+
+                conflicts[x] = conflicts[x] + tempConflicts
+            col += 1
+
 
     def checkConflicts(self):
         
@@ -77,6 +131,16 @@ class Board:
         self.checkConflictsRightDown()
         print("After Down Right checks: ", end='')
         print(self.columns)
+        self.checkConflictsRightUp()
+        print("After Up Right checks:    ", end='')
+        print(self.columns)
+        self.checkConflictsLeftUp()
+        print("After Left Up checks:    ", end='')
+        print(self.columns)
+        self.checkConflictsLeftDown()
+        print("After Left Down checks:    ", end='')
+        print(self.columns)
+
         #loop through index of colums for possible placements of queen
         
     #def moveQueen(self):
