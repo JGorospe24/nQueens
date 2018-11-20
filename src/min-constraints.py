@@ -6,7 +6,7 @@ def main():
     print(chessBoard.queens)
     print(chessBoard.columns)
     chessBoard.checkConflicts()
-    print(chessBoard.columns)
+
 
 
 if __name__ == '__main__':
