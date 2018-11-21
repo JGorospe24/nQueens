@@ -29,19 +29,24 @@ class Board:
 
     def checkConflictsHorizontal(self):
         col = 0
-
+        #Get a new list of constraints, representing the next column
         for conflicts in self.columns:
             row = 0
+            #Iterate through each row in this column
             for x in conflicts:
                 tempConflicts = 0
 
+                #Check every column for queen in current row
                 for y in self.queens:
+                    print("Checking row {} in {} for spot {} in list {}".format(row, y, x, conflicts))
                     if self.queens[y] == row:
                         tempConflicts += 1
+                #Check if queen in current column list is in the row we are checking, since it will count itself as a conflict in this case
                 if self.queens["Q" + str(col+1)] == row:
                     tempConflicts -= 1
-
+                #Update the conflicts list for that particular block in the column
                 conflicts[x] = tempConflicts
+                
                 row += 1
             col += 1
 
