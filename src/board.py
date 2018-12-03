@@ -63,10 +63,13 @@ class Board:
                 minInstances += 1
 
         randomIndex = random.randint(0, minInstances - 1)
+        print("OKAY SO WE GOT INDEXES {} AND WERE CHOOSING SPOT {} IN THE LIST".format(minList, randomIndex))
         return minList[randomIndex]
 
     def checkConflicts(self, col, colCount):
         y = colCount #Where we are in the columns
+        print(self.queens)
+        print("THIS IS FOR COLUMN {}".format(colCount))
         for position in col:
             self.columns[colCount][position] = 0
             nextTile = position
@@ -81,6 +84,7 @@ class Board:
 
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
+                    print("Q{}@{}: found conflict right up".format(columns, position))
 
             nextTile = position
             # This For loop checks for Diagonal Bottom Right Corner
@@ -92,6 +96,7 @@ class Board:
 
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
+                    print("Q{}@{}: Found conflict Right Down".format(columns, position))
 
             nextTile = position
             # This For loop checks for Diagonal Upper Left Corner
@@ -102,6 +107,7 @@ class Board:
                     break
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
+                    print("Q{}@{}: Found conflict left up".format(columns,position))
 
             nextTile = position
             # This For loop checks for Diagonal Bottom Left Corner
@@ -112,12 +118,14 @@ class Board:
                     break
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
+                    print("Q{}@{} Found conflict left down".format(columns,position))
 
             # This For loop checks for Horizontal
             for columns in range(0, self.Max + 1):
                 if columns != colCount:
                     if self.queens["Q" + str(columns)] == position:
                         self.columns[colCount][position] += 1
+                        print("Q{}@{}: Found conflict Horizontal".format(columns,position))
             #Check Diagonal
 
 
