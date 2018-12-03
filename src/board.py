@@ -23,20 +23,50 @@ class Board:
             self.columns.append(columnTiles)
 
     def updateConflicts(self):
-
-        start = timeit.default_timer()
         colCounter = 0
         for col in self.columns:
             self.checkConflicts(col, colCounter)
             colCounter += 1;
 
 
-        stop = timeit.default_timer()
+    def checkSolution(self):
+        counter = 0
+        for x in self.queens:
+            if self.columns[counter][self.queens[x]] != 0:
+                return 0
+            counter += 1
+        return 1
 
-        print('Time: ', stop - start)
+    def chooseQueen(self):
+        while True:
+            #Choose random column
+            index = random.randint(0, self.Max)
+            #Check queen
+            qIndex = self.queens["Q" + str(index)]
+            #Check if that spot is 0
+            print("Checking Q{} at position {}, there are {} conflicts".format(index, qIndex, self.columns[index][qIndex]))
+            if self.columns[index][qIndex] != 0:
+                return index
+
+    def minIndex(self, col):
+        column = self.columns[col]
+        minValue = 99
+        minList = list()
+        minInstances = 0
+        for x in range(self.Max + 1):
+            if column[x] < minValue:
+                minValue = column[x]
+
+        for x in range(self.Max + 1):
+            if column[x] == minValue:
+                minList.append(x)
+                minInstances += 1
+
+        randomIndex = random.randint(0, minInstances - 1)
+        return minList[randomIndex]
 
     def checkConflicts(self, col, colCount):
-        y = colCount;  #Where we are in the columns
+        y = colCount #Where we are in the columns
         for position in col:
             self.columns[colCount][position] = 0
             nextTile = position
@@ -85,7 +115,6 @@ class Board:
 
             # This For loop checks for Horizontal
             for columns in range(0, self.Max + 1):
-                print(columns)
                 if columns != colCount:
                     if self.queens["Q" + str(columns)] == position:
                         self.columns[colCount][position] += 1
