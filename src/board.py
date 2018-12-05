@@ -44,13 +44,13 @@ class Board:
             #Check queen
             qIndex = self.queens["Q" + str(index)]
             #Check if that spot is 0
-            print("Checking Q{} at position {}, there are {} conflicts".format(index, qIndex, self.columns[index][qIndex]))
-            if self.columns[index][qIndex] != 0:
+            #print("Checking Q{} at position {}, there are {} conflicts".format(index, qIndex, self.columns[index][qIndex]))
+            if self.columns[index][qIndex] != 0 or self.columns[index].count(0) > 1:
                 return index
 
     def minIndex(self, col):
         column = self.columns[col]
-        minValue = 99
+        minValue = self.Max + 1
         minList = list()
         minInstances = 0
         for x in range(self.Max + 1):
@@ -63,14 +63,16 @@ class Board:
                 minInstances += 1
 
         randomIndex = random.randint(0, minInstances - 1)
-        print("OKAY SO WE GOT INDEXES {} AND WERE CHOOSING SPOT {} IN THE LIST".format(minList, randomIndex))
+        #print("OKAY SO WE GOT INDEXES {} AND WERE CHOOSING SPOT {} IN THE LIST".format(minList, randomIndex))
         return minList[randomIndex]
 
     def checkConflicts(self, col, colCount):
         y = colCount #Where we are in the columns
-        print(self.queens)
-        print("THIS IS FOR COLUMN {}".format(colCount))
-        for position in col:
+        #print(self.queens)
+        #print(self.columns)
+        #print("THIS IS FOR COLUMN {}".format(colCount))
+        for position in range(len(col)):
+            #print("We are checking position ", position)
             self.columns[colCount][position] = 0
             nextTile = position
 
@@ -84,7 +86,7 @@ class Board:
 
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
-                    print("Q{}@{}: found conflict right up".format(columns, position))
+                    #print("Q{}@{}: found conflict right up for position {} in Q{}".format(columns, self.queens["Q" + str(columns)],  position, colCount))
 
             nextTile = position
             # This For loop checks for Diagonal Bottom Right Corner
@@ -96,7 +98,7 @@ class Board:
 
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
-                    print("Q{}@{}: Found conflict Right Down".format(columns, position))
+                    #print("Q{}@{}: Found conflict Right Down for position {} in Q{}".format(columns, self.queens["Q" + str(columns)],  position, colCount))
 
             nextTile = position
             # This For loop checks for Diagonal Upper Left Corner
@@ -107,7 +109,7 @@ class Board:
                     break
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
-                    print("Q{}@{}: Found conflict left up".format(columns,position))
+                    #print("Q{}@{}: Found conflict left up for position {} in Q{}".format(columns, self.queens["Q" + str(columns)],  position, colCount))
 
             nextTile = position
             # This For loop checks for Diagonal Bottom Left Corner
@@ -118,14 +120,14 @@ class Board:
                     break
                 if self.queens["Q" + str(columns)] == nextTile:
                     self.columns[colCount][position] += 1
-                    print("Q{}@{} Found conflict left down".format(columns,position))
+                    #print("Q{}@{} Found conflict left down for position {} in Q{}".format(columns, self.queens["Q" + str(columns)],  position, colCount))
 
             # This For loop checks for Horizontal
             for columns in range(0, self.Max + 1):
                 if columns != colCount:
                     if self.queens["Q" + str(columns)] == position:
                         self.columns[colCount][position] += 1
-                        print("Q{}@{}: Found conflict Horizontal".format(columns,position))
+                        #print("Q{}@{}: Found conflict Horizontal for position {} in Q{}".format(columns, self.queens["Q" + str(columns)], position, colCount))
             #Check Diagonal
 
 
