@@ -22,12 +22,14 @@ class Board:
             #At this point, we should have a column list of all the columns and its values, and a queens dictionary to keep track of where the queens are placed within a column
             self.columns.append(columnTiles)
 
-    def updateConflicts(self):
+    def updateConflicts(self, index):
+        self.checkConflicts(self.columns[index], index)
+
+    def updateConflictsInitial(self):
         colCounter = 0
         for col in self.columns:
             self.checkConflicts(col, colCounter)
             colCounter += 1;
-
 
     def checkSolution(self):
         counter = 0
@@ -50,20 +52,25 @@ class Board:
 
     def minIndex(self, col):
         column = self.columns[col]
-        minValue = self.Max + 1
+        minValue = column[0]
+        #minList is position of minimum values in current col
         minList = list()
-        minInstances = 0
+        #initialize it with index 0
+        minList.append(0)
+        minInstances = 1
+
         for x in range(self.Max + 1):
             if column[x] < minValue:
                 minValue = column[x]
-
-        for x in range(self.Max + 1):
-            if column[x] == minValue:
+                #if new min value found, clear old list and enter new minindex
+                minList.clear()
                 minList.append(x)
-                minInstances += 1
+                minInstances = 1
+            elif column[x] == minValue:
+                minList.append(x)
+                minInstances+=1
 
         randomIndex = random.randint(0, minInstances - 1)
-        #print("OKAY SO WE GOT INDEXES {} AND WERE CHOOSING SPOT {} IN THE LIST".format(minList, randomIndex))
         return minList[randomIndex]
 
     def checkConflicts(self, col, colCount):
