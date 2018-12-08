@@ -34,7 +34,7 @@ class Board:
 
             if(self.columns[x].count(minVal) > 1):
                 minPositions = [(i,j) for i,j in enumerate(self.columns[x]) if j == minVal]
-                randIndex = random.randint(0, len(minPositions) - 1)
+                randIndex = random.randint(0, len( minPositions) - 1)
                 queenPos = minPositions[randIndex][0]
             else:
                 queenPos = self.columns[x].index(minVal)
