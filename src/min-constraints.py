@@ -3,44 +3,44 @@ from copy import deepcopy
 import timeit
 import time
 
-
 def minConstraints(csp, maxSteps):
     steps = 0
+    for x in range(csp.Max + 1):
+        csp.updateConflicts(x)
+
+    columns = (csp.columns)
     for x in range(maxSteps):
-
-        print("We are on step ", steps)
-
         if csp.checkSolution() == 1:
-            print("It took {} steps".format(steps))
             return csp
         steps += 1
+
         var = csp.chooseQueen()
-        csp.updateConflicts(var)
+        old = csp.queens["Q" + str(var)]
+        #col = csp.columns[var]
         newIndex = csp.minIndex(var)
         csp.queens["Q" + str(var)] = newIndex
-
-    print("It took {} steps".format(steps))
     return 0
 
 def main():
-    start = time.time() #start measuring execution time
 
-    #get user input from consol
+    #get user input from console
     n = int(input("How many Queens?"))
-
     chessBoard = Board(n)
 
     #incase we ever need to manually input a board use below
-    #chessBoard.queens = {'Q0': 0, 'Q1': 1, 'Q2': 3, 'Q3': 1}
+    #chessBoard.queens = {'Q0': 0, 'Q1': 2, 'Q2': 3, 'Q3': 1}
 
     #Call the solver and pass the board to minconstraints
     #the max size here will be n*2 , if reached the program
     #will restart
+    start = time.time() #start measuring execution time
     solution = 0
     while solution == 0:
-        chessBoard.updateConflictsInitial()
-        solution = minConstraints(chessBoard, n*2)
+        solution = minConstraints(chessBoard, 100000)
 
+
+
+    print(chessBoard.queens)
     print("Solution Found")
 
     #end of execution time for solver
@@ -49,9 +49,12 @@ def main():
 
     #write the output to a text file in a readable format
     with open('out.txt', 'w') as f:
-        for row in range(n):
-            for col in chessBoard.columns:
-                f.write("{}|".format(col[row]))
+        for col in range(n):
+            for row in range(n):
+                if (col == chessBoard.queens["Q" + str(row)]):
+                    f.write("Q|")
+                else:
+                    f.write("X|")
             f.write("\n")
     f.close()
 
